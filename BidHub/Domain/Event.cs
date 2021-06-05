@@ -24,6 +24,7 @@ namespace BidHub.API.Domain
             {
                 decimal currentMaxBid = 0;
                 decimal buyerNextBid = 0;
+
                 foreach (var buyer in Buyers)
                 {
                     if (buyer.HasExceededMaxBid) continue;
@@ -34,6 +35,7 @@ namespace BidHub.API.Domain
                     {
                         currentMaxBid = buyerNextBid;
                         Winner = buyer;
+                        WinningBid = currentMaxBid;
                     }
                 }
 

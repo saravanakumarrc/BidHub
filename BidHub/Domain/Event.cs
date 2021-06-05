@@ -14,7 +14,7 @@ namespace BidHub.API.Domain
         public DateTime EndTime { get; set; }
         public int AutoIncrementLimit { get; set; }
         public SellerItem SellerItemInfo { get; set; }
-        public ICollection<Buyer> Buyers { get; set; }
+        public ICollection<Bid> Bids { get; set; }
         public decimal WinningBid { get; private set; }
         public Buyer Winner { get; private set; }
 
@@ -25,21 +25,21 @@ namespace BidHub.API.Domain
                 decimal currentMaxBid = 0;
                 decimal buyerNextBid = 0;
 
-                foreach (var buyer in Buyers)
+                foreach (var bid in Bids)
                 {
-                    if (buyer.HasExceededMaxBid) continue;
+                    if (bid.HasExceededMaxBid) continue;
 
-                    buyerNextBid  = buyer.GetNextBid();
+                    buyerNextBid  = bid.GetNextBidPrice();
 
                     if(currentMaxBid < buyerNextBid)
                     {
                         currentMaxBid = buyerNextBid;
-                        Winner = buyer;
+                        Winner = bid.BuyerInfo;
                         WinningBid = currentMaxBid;
                     }
                 }
 
-            } while (Buyers.Count(buyer => !buyer.HasExceededMaxBid) > 1);
+            } while (Bids.Count(buyer => !buyer.HasExceededMaxBid) > 1);
 
             return WinningBid;
         }

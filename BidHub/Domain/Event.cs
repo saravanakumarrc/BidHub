@@ -15,34 +15,7 @@ namespace BidHub.API.Domain
         public int AutoIncrementLimit { get; set; }
         public SellerItem SellerItemInfo { get; set; }
         public ICollection<Bid> Bids { get; set; }
-        public decimal WinningBid { get; private set; }
-        public Buyer Winner { get; private set; }
-
-        public decimal ProcessBids()
-        {
-            do
-            {
-                decimal currentMaxBid = 0;
-                decimal buyerNextBid = 0;
-
-                foreach (var bid in Bids)
-                {
-                    if (bid.HasExceededMaxBid) continue;
-
-                    buyerNextBid  = bid.GetNextBidPrice();
-
-                    if(currentMaxBid < buyerNextBid)
-                    {
-                        currentMaxBid = buyerNextBid;
-                        Winner = bid.BuyerInfo;
-                        WinningBid = currentMaxBid;
-                    }
-                }
-
-            } while (Bids.Count(buyer => !buyer.HasExceededMaxBid) > 1);
-
-            return WinningBid;
-        }
-
+        public decimal WinningBid { get; set; }
+        public Buyer Winner { get; set; }
     }
 }

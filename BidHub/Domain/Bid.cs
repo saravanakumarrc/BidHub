@@ -8,16 +8,19 @@ namespace BidHub.API.Domain
     public class Bid
     {
         public Buyer BuyerInfo { get; set; }
-        public int EventId { get; set; }
-        public decimal StartingBid { get; set; }
-        public decimal MaxBid { get; set; }
-        public decimal AutoIncrementAmount { get; set; }
+        public int EventId { get; private set; }
+        public decimal StartingBid { get; private set; }
+        public decimal MaxBid { get; private set; }
+        public decimal AutoIncrementAmount { get; private set; }
         public decimal CurrentBid { get; private set; }
         public bool HasExceededMaxBid { get; private set; }
 
         public Bid(int eventId, decimal startingBid, decimal maxBid, decimal autoIncrementAmount)
         {
-
+            EventId = eventId;
+            StartingBid = startingBid;
+            MaxBid = maxBid;
+            AutoIncrementAmount = AutoIncrementAmount;
         }
 
         /// <summary>
